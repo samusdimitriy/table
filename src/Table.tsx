@@ -1,4 +1,3 @@
-// Table.tsx
 import React, { useState } from 'react';
 import { Table as BootstrapTable, Button } from 'react-bootstrap';
 import { sortData, SortOptions } from './sortUtils';
@@ -23,6 +22,7 @@ const Table = <T,>({ data, columns, navigatePath }: TableProps<T>) => {
   });
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage] = useState<number>(3);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const navigate = useNavigate();
 
   const handleSort = (key: keyof T) => {
@@ -30,6 +30,8 @@ const Table = <T,>({ data, columns, navigatePath }: TableProps<T>) => {
       key,
       order: prev.key === key ? (prev.order === 'asc' ? 'desc' : 'asc') : 'asc',
     }));
+    setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    setCurrentPage(1);
   };
 
   const handlePageChange = (newPage: number) => {
@@ -43,10 +45,11 @@ const Table = <T,>({ data, columns, navigatePath }: TableProps<T>) => {
   };
 
   const sortedData = sortData(data, sortInfo);
-  const totalPages = Math.ceil(sortedData.length / itemsPerPage) || 1;
+
+  const totalPages = Math.ceil(sortedData.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const renderedData = sortedData.slice(startIndex, endIndex);
+  const visibleData = sortedData.slice(startIndex, endIndex);
 
   return (
     <div>
@@ -58,13 +61,16 @@ const Table = <T,>({ data, columns, navigatePath }: TableProps<T>) => {
                 key={String(column.key)}
                 onClick={() => handleSort(column.key)}
               >
-                {column.label}
+                {column.label}{' '}
+                {sortInfo.key === column.key && (
+                  <span>{sortOrder === 'asc' ? '↑' : '↓'}</span>
+                )}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {renderedData.map((item, index) => (
+          {visibleData.map((item, index) => (
             <tr
               key={String(item[columns[0].key]) || index}
               onClick={() => handleRowClick(item)}
@@ -72,13 +78,13 @@ const Table = <T,>({ data, columns, navigatePath }: TableProps<T>) => {
               {columns.map((column) => (
                 <td key={String(column.key)}>
                   {column.render
-                    ? column.render(item[column.key] as T[keyof T])
+                    ? column.render(item[column.key])
                     : String(item[column.key])}
                 </td>
               ))}
             </tr>
           ))}
-          {renderedData.length === 0 && (
+          {visibleData.length === 0 && (
             <tr>
               <td colSpan={columns.length}>No data available</td>
             </tr>
@@ -95,7 +101,7 @@ const Table = <T,>({ data, columns, navigatePath }: TableProps<T>) => {
         </Button>
         <span>
           {' '}
-          Page {currentPage} of {totalPages}{' '}
+          Page {currentPage} of {totalPages || 1}{' '}
         </span>
         <Button
           onClick={() => handlePageChange(currentPage + 1)}
