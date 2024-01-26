@@ -1,4 +1,3 @@
-// sortUtils.ts
 export interface SortOptions<T> {
   key: keyof T | null;
   order: 'asc' | 'desc';
