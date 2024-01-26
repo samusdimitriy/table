@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Table as BootstrapTable, Button } from 'react-bootstrap';
 import { sortData, SortOptions } from './sortUtils';
 import { useNavigate } from 'react-router-dom';
+import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
 
 interface TableColumn<T> {
   key: keyof T;
@@ -22,16 +23,25 @@ const Table = <T,>({ data, columns, navigatePath }: TableProps<T>) => {
   });
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage] = useState<number>(3);
+  const [activeColumn, setActiveColumn] = useState<keyof T | null>(null);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const navigate = useNavigate();
 
   const handleSort = (key: keyof T) => {
-    setSortInfo((prev) => ({
-      key,
-      order: prev.key === key ? (prev.order === 'asc' ? 'desc' : 'asc') : 'asc',
-    }));
-    setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
-    setCurrentPage(1);
+    if (data.length > 0) {
+      if (activeColumn !== key) {
+        setSortInfo({ key, order: 'asc' });
+        setSortOrder('asc');
+      } else {
+        setSortInfo((prev) => ({
+          key,
+          order: prev.order === 'asc' ? 'desc' : 'asc',
+        }));
+        setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+      }
+      setCurrentPage(1);
+      setActiveColumn(key);
+    }
   };
 
   const handlePageChange = (newPage: number) => {
@@ -62,8 +72,8 @@ const Table = <T,>({ data, columns, navigatePath }: TableProps<T>) => {
                 onClick={() => handleSort(column.key)}
               >
                 {column.label}{' '}
-                {sortInfo.key === column.key && (
-                  <span>{sortOrder === 'asc' ? '↑' : '↓'}</span>
+                {activeColumn === column.key && (
+                  <>{sortOrder === 'asc' ? <FaArrowDown /> : <FaArrowUp />}</>
                 )}
               </th>
             ))}
