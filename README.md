@@ -1,30 +1,56 @@
-# React + TypeScript + Vite
+# Table
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Table](./src/images/preview.png)
 
-Currently, two official plugins are available:
+This project is a web application for displaying data in tabular form. Users can browse through the table, apply filters, and navigate between different pages.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
 
-## Expanding the ESLint configuration
+- [Table](#table)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Technologies Used](#technologies-used)
+  - [Getting Started](#getting-started)
+  - [Installation](#installation)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Features
 
-- Configure the top-level `parserOptions` property like this:
+- Display data in a table format
+- Apply filters to the table data
+- Navigate between different pages of the table
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Technologies Used
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- React.js: JavaScript library for building user interfaces.
+- TypeScript: Adds static typing to JavaScript, enhancing code scalability and readability.
+- react-router-dom: Library for managing navigation in React applications.
+- react-bootstrap: Bootstrap components adapted for use in React applications.
+- react-loader-spinner: Animated loading indicators for enhanced user experience.
+
+## Getting Started
+
+To get started with this project, follow the installation instructions below.
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/samusdimitriy/table.git
+   cd table-app
+   ```
+
+2. Install the dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm start
+   ```
+4. Open
+   [https://samusdimitriy.github.io/table/](https://samusdimitriy.github.io/table/)
+   to view it in the browser.
+
+5.License This project is licensed under the MIT License - see the LICENSE file
+for details.
