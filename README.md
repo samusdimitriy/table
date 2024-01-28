@@ -26,6 +26,11 @@ This project is a web application for displaying data in tabular form. Users can
 - react-router-dom: Library for managing navigation in React applications.
 - react-bootstrap: Bootstrap components adapted for use in React applications.
 - react-loader-spinner: Animated loading indicators for enhanced user experience.
+- react-query: Library for managing and caching server state in React applications.
+- axios: Promise-based HTTP client for making requests to your API.
+- mockapi.io: Mock API for simulating backend data.
+- eslint: Tool for identifying and reporting patterns found in ECMAScript/JavaScript code.
+- prettier: Code formatter ensuring consistent code style across the project.
 
 ## Getting Started
 
