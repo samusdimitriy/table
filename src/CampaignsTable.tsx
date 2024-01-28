@@ -1,26 +1,32 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Table from './Table';
-import campaignsData from './data/campaigns';
+import { fetchDataForTable, TableData } from './data/api';
 import './styles.css';
 
 const CampaignsTable = () => {
   const { profileId } = useParams();
-  const [campaigns, setCampaigns] = useState<
-    {
-      campaignId: string;
-      profileId: string;
-      clicks: number;
-      cost: number;
-      date: string;
-    }[]
-  >([]);
+  const [campaigns, setCampaigns] = useState<TableData[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const filteredCampaigns = campaignsData.filter(
-      (campaign) => campaign.profileId === profileId
-    );
-    setCampaigns(filteredCampaigns);
+    const fetchData = async () => {
+      try {
+        const data = await fetchDataForTable('campaigns');
+        setCampaigns(data);
+        setLoading(false);
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        } else {
+          console.error('An unknown error occurred.');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, [profileId]);
 
   return (
@@ -34,6 +40,7 @@ const CampaignsTable = () => {
           { key: 'cost', label: 'Cost' },
           { key: 'date', label: 'Date' },
         ]}
+        loading={loading}
       />
     </div>
   );

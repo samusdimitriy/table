@@ -6,6 +6,7 @@
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 40px;
+  min-height: 165px;
 }
 
 .table-container th,
