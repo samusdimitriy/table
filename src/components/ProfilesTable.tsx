@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Table from './Table';
-import { fetchDataForTable, TableData } from '../data/api';
+import { fetchProfileData, ProfileData } from '../data/api';
 
 import './styles.css';
 
 const ProfilesTable = () => {
   const { accountId } = useParams<{ accountId: string | undefined }>();
-  const [profiles, setProfiles] = useState<TableData[]>([]);
+  const [profiles, setProfiles] = useState<ProfileData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchDataForTable('profiles');
+        const data = await fetchProfileData();
         setProfiles(data);
         setLoading(false);
       } catch (error) {

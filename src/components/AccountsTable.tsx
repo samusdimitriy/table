@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import Table from './Table';
-import { fetchDataForTable, TableData } from '../data/api';
+import { fetchAccountData, AccountData } from '../data/api';
 
 import './styles.css';
 
 const AccountsTable = () => {
-  const [accountsData, setAccountsData] = useState<TableData[]>([]);
+  const [accountsData, setAccountsData] = useState<AccountData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchDataForTable('accounts');
+        const data = await fetchAccountData();
         setAccountsData(data);
         setLoading(false);
       } catch (error) {

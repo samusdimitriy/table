@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Table from './Table';
-import { fetchDataForTable, TableData } from '../data/api';
+import { fetchCampaignData, CampaignData } from '../data/api';
 import './styles.css';
 
 const CampaignsTable = () => {
   const { profileId } = useParams();
-  const [campaigns, setCampaigns] = useState<TableData[]>([]);
+  const [campaigns, setCampaigns] = useState<CampaignData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchDataForTable('campaigns');
+        const data = await fetchCampaignData();
         setCampaigns(data);
         setLoading(false);
       } catch (error) {
